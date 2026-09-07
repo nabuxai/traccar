@@ -17,6 +17,7 @@
 package org.traccar.api;
 
 import com.google.inject.Provider;
+import io.netty.handler.codec.http.HttpHeaderNames;
 import org.traccar.api.security.LoginResult;
 import org.traccar.api.security.LoginService;
 import org.traccar.api.security.PermissionsService;
@@ -62,6 +63,7 @@ public class MediaFilter implements Filter {
             throws IOException, ServletException {
 
         HttpServletResponse httpResponse = (HttpServletResponse) response;
+        httpResponse.setHeader(HttpHeaderNames.CONTENT_SECURITY_POLICY.toString(), "sandbox");
         try {
             PermissionsService permissionsService = permissionsServiceProvider.get();
             LoginResult loginResult = loginService.login((HttpServletRequest) request);
